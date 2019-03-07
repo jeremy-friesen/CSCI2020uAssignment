@@ -1,3 +1,9 @@
+// Jeremy Friesen
+// 100649797
+// Histogram
+// Displays a histogram with the count of occurrences of each letter in a text file
+// The user may enter the path to their own text file, and the histogram will graph it
+
 package sample;
 
 import javafx.application.Application;
@@ -31,11 +37,10 @@ public class Histogram extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception{
-		//readFile();
 		GridPane pane = new GridPane();
 		HBox hbox = new HBox();
 
-		//Bar Chart
+		// Initialize Bar Chart
 		final CategoryAxis xAxis = new CategoryAxis();
 		final NumberAxis yAxis = new NumberAxis();
 		final BarChart<String,Number> bc = new BarChart<String,Number>(xAxis,yAxis);
@@ -48,12 +53,17 @@ public class Histogram extends Application {
 		bc.getData().add(series);
 		pane.add(bc,0,0);
 
+		// Initialize input textField and button
 		TextField textField = new TextField();
 		Button button = new Button("View");
+		// set button action
 		button.setOnAction(e -> {
 			try {
+				// make new text file with user-input filepath
 				file = new File(textField.getText());
 				readFile();
+
+				// add data to Bar Chart
 				XYChart.Series s = new XYChart.Series();
 				for(int i = 0; i < 26; i++){
 					s.getData().add(new XYChart.Data(alphabetStr[i], occurrences[i]));
@@ -72,8 +82,8 @@ public class Histogram extends Application {
 		readFile();
 	}
 
+	// Read in designated file and increase occurrences according to the characters in that file
 	public void readFile() throws Exception {
-		System.out.println("read file");
 		if(file.exists()) {
 			occurrences = new int[26];
 			Scanner input = new Scanner(file);

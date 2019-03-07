@@ -1,3 +1,9 @@
+// Jeremy Friesen
+// 100649797
+// investmentCalculator
+// This program calculates the future value of an investment
+// using the original investment, the # of years passed, and the rate of return
+
 package sample;
 
 import javafx.application.Application;
@@ -27,6 +33,7 @@ public class investmentCalculator extends Application{
         pane.setHgap(5.5);
         pane.setVgap(5.5);
 
+        // add TextFields for user to input values
         pane.add(new Label("Investment Amount"), 0, 0);
         pane.add(tfInvestment, 1, 0);
         pane.add(new Label("Years"), 0, 1);
@@ -34,12 +41,18 @@ public class investmentCalculator extends Application{
         pane.add(new Label("Annual Interest Rate"), 0, 2);
         pane.add(tfRate, 1, 2);
         pane.add(new Label("Future Value"), 0, 3);
+
+        // add futureValue field
         tfFutureValue.setEditable(false);
         pane.add(tfFutureValue, 1, 3);
+
+        // add "Calculate" button
         Button btRegister = new Button("Calculate");
         pane.add(btRegister, 1, 4);
         GridPane.setHalignment(btRegister, HPos.LEFT);
-        RegisterHandlerClass handler1 = new RegisterHandlerClass();
+
+        // assign ButtonHandler to button
+        ButtonHandler handler1 = new ButtonHandler();
         btRegister.setOnAction(handler1);
 
         // Create a scene and place it in the stage
@@ -49,13 +62,16 @@ public class investmentCalculator extends Application{
         primaryStage.show();
     }
 
-    class RegisterHandlerClass implements EventHandler<ActionEvent> {
+    class ButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
+            // get the value of each input field
             double investmentAmount = Double.valueOf(tfInvestment.getText());
             double monthlyInterestRate = Double.valueOf(tfRate.getText()) / 12.0 / 100.0;
             double years = Double.valueOf(tfYears.getText());
+            // calculate future value
             double futureValue = investmentAmount * Math.pow(1 + monthlyInterestRate, years * 12.0);
+            // display future value
             tfFutureValue.setText(String.valueOf(Math.round(futureValue*100.0)/100.0));
         }
     }
